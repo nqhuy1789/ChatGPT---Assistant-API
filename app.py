@@ -43,6 +43,7 @@ def message_send(recipient_id, response):
 	bot.send_text_message(recipient_id, response)
 	return "success"
 
+
 def generate_message(text, recipient_id):
 	response_sent_text = ''
 	response_sent_image = ''
@@ -53,10 +54,13 @@ def generate_message(text, recipient_id):
 		intents = response['intents'][0]['name']
 		if intents == 'mo_dau':
 			response_sent_text = "Cafe167 rất vui được phục vụ quý khách. Đây là menu của quán, chúc bạn chọn được thức uống vừa ý!"
-			response_sent_image = 'https://scontent.fsgn1-1.fna.fbcdn.net/v/t39.30808-6/418514395_122107255376177774_7917820904535141587_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeGXT2cWi6vGNGi7xMLuzaWMgS8vYg4irqmBLy9iDiKuqYgNUkdi72ZaGsaof3kiKBiSsmUey7KfjYafZJMT5UG4&_nc_ohc=QL8l34ozMv0AX8x-zC6&_nc_ht=scontent.fsgn1-1.fna&oh=00_AfDwwlyuQTjQyxl2-vWfPo7S3oZciBvKImxKsZK9X8GSsA&oe=65AD0DB6'
 			message_send(recipient_id, response_sent_text)
+			response_sent_image = 'https://scontent.fsgn1-1.fna.fbcdn.net/v/t39.30808-6/418514395_122107255376177774_7917820904535141587_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeGXT2cWi6vGNGi7xMLuzaWMgS8vYg4irqmBLy9iDiKuqYgNUkdi72ZaGsaof3kiKBiSsmUey7KfjYafZJMT5UG4&_nc_ohc=QL8l34ozMv0AX8x-zC6&_nc_ht=scontent.fsgn1-1.fna&oh=00_AfDwwlyuQTjQyxl2-vWfPo7S3oZciBvKImxKsZK9X8GSsA&oe=65AD0DB6'
 			image_send(recipient_id, response_sent_image)
 			response_sent_text = "Đặt hàng online tại: https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa"
+			message_send(recipient_id, response_sent_text)
+		elif intents == 'ket_thuc':
+			response_sent_text = "Xin cảm ơn quý khách đã ủng hộ Cafe167. Hẹn gặp lại quý khách."
 			message_send(recipient_id, response_sent_text)
 		elif intents == 'muon_mua':
 			response_sent_text = "Xin cảm ơn quý khách đã ủng hộ. Vui lòng để lại tên và số điện thoại để quán liên hệ giao hàng, hoặc click vào link để đặt hàng online : https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa"
@@ -151,19 +155,39 @@ def generate_message(text, recipient_id):
 		elif intents == 'thong_tin':
 			if response['entities']:
 				entities = response['entities']
-				print(entities)
+				bPrint = False
 				for item  in entities:
 					if entities[item][0]['role'] == 'hang_dac_biet':
 						response_sent_text = "Cafe167 xin gửi đến bạn chương trình khuyến mãi đặc biệt tại địa chỉ: https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa"
 						message_send(recipient_id, response_sent_text)
-					elif entities[item][0]['role'] == 'dat_hang':
+						bPrint = True
+						break
+					elif entities[item][0]['role'] == 'muon_mua':
 						response_sent_text = "Đặt hàng online tại: https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa"
 						message_send(recipient_id, response_sent_text)
+						bPrint = True
+						break
 					elif entities[item][0]['role'] == 'gio':
-						response_sent_text = "Cafe167 mở cửa từ 7h - 20h mỗi ngày"
+						response_sent_text = "Cafe167 mở cửa từ 7h - 22h mỗi ngày"
 						message_send(recipient_id, response_sent_text)
+						bPrint = True
+						break
+					elif entities[item][0]['role'] == 'do_an':
+						response_sent_text = "Hiện nay quán không bán đồ ăn. Mong bạn thông cảm!"
+						message_send(recipient_id, response_sent_text)
+						bPrint = True
+						break
+					elif entities[item][0]['role'] == 'dia_chi':
+						response_sent_text = "Địa chỉ của quán là 167bis Hoàng Sa, phường Tân Định, quận 1. Bạn đi theo Google map này nhé: https://maps.app.goo.gl/heazVACbVuWSEjqo8"
+						message_send(recipient_id, response_sent_text)
+						bPrint = True
+						break
+				if bPrint == False:
+					response_sent_text = "Vui lòng để lại tên và số điện thoại, Cafe167 sẽ liên hệ hỗ trợ bạn ngay."
+					message_send(recipient_id, response_sent_text)
 	else:
-		response_sent_text = "Cafe167 giúp được gì cho bạn? Vui lòng để lại số điện thoại, Cafe167 sẽ liên hệ hỗ trợ bạn ngay."
+		response_sent_text = "Vui lòng để lại tên và số điện thoại, Cafe167 sẽ liên hệ hỗ trợ bạn ngay."
+		message_send(recipient_id, response_sent_text)
 
 # if __name__ == '__main__':
 # 	app.run()
