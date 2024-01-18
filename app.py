@@ -164,5 +164,5 @@ def generate_message(text, recipient_id):
 	else:
 		response_sent_text = "Cafe167 giúp được gì cho bạn? Vui lòng để lại số điện thoại, Cafe167 sẽ liên hệ hỗ trợ bạn ngay."
 
-if __name__ == '__main__':
-	app.run()
+# if __name__ == '__main__':
+# 	app.run()
