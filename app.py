@@ -186,7 +186,7 @@ def generate_message(text, recipient_id):
 					response_sent_text = "Vui lòng để lại tên và số điện thoại, Cafe167 sẽ liên hệ hỗ trợ bạn ngay."
 					message_send(recipient_id, response_sent_text)
 	else:
-		response_sent_text = "Vui lòng để lại tên và số điện thoại, Cafe167 sẽ liên hệ hỗ trợ bạn ngay."
+		response_sent_text = "Xin cảm ơn quý khách đã quan tâm đến Cafe167, chúc quý khách một ngày tốt lành."
 		message_send(recipient_id, response_sent_text)
 
 # if __name__ == '__main__':
