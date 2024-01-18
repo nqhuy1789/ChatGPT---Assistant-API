@@ -3,10 +3,11 @@ from pymessenger.bot import Bot
 from wit import Wit
 import requests
 import random
+import os
 
 app = Flask(__name__)
-ACCESS_TOKEN = "EAASyyt9tQNoBO6a5gpyuirs9dvrvrUT5kDJ3j30JiWJnbp56U7XwLBjRobRvwqDU3NLOQXRTr86aWZC2gZCgVGDYDm4z1BKoIxm6oEy4BQjizuo85qNlgTJhNZCSyKUL0tc2T9z35jDEZBEMJw78Gz51cVa7bn7WPGlu7ZBIuPL4dWKD2ZBxzCldh9OJlLrL9Bp3WowaRtGZALmdpbI"
-VERIFY_TOKEN = "CAFE167HOANGSA"
+ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
+VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 WIT_TOKEN = 'W3YRCR3ZXQSGHYZFKWAG3VQDJENNBPMG'
 bot = Bot(ACCESS_TOKEN)
 client = Wit(access_token=WIT_TOKEN)
