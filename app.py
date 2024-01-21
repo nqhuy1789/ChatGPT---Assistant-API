@@ -25,11 +25,12 @@ def webhook():
 			for message in messaging:
 				if message.get('message'):
 					recipient_id = message['sender']['id']
-					sendTypingOn(recipient_id )
+					sendTypingOn(recipient_id)
 					# user_profile = bot.get_user_info(recipient_id)
 					# if user_profile: user_first_name = user_profile['first_name']
 					text = message['message'].get('text')
 					if text: generate_message(text,recipient_id)
+					sendTypingOff(recipient_id)
 	return '200 OK HTTPS.'
 
 def verify_token(token):
@@ -49,6 +50,10 @@ def sendTypingOn(recipient_id):
 	bot.send_action(recipient_id, action='typing_on')
 	return "success"
 
+def sendTypingOff(recipient_id):
+	bot.send_action(recipient_id, action='typing_off')
+	return "success"
+
 def generate_message(text, recipient_id):
 	response_sent_text = ''
 	response_sent_image = ''
@@ -58,7 +63,7 @@ def generate_message(text, recipient_id):
 	if response['intents']:
 		intents = response['intents'][0]['name']
 		if intents == 'mo_dau':
-			response_sent_text = "Xin chào {user_first_name} đã ghé thăm Fanpage Cafe167. Đây là menu của quán, chúc {user_first_name} chọn được thức uống vừa ý!"
+			response_sent_text = "Xin chào quý khách đã ghé thăm Fanpage Cafe167. Đây là menu của quán, chúc bạn chọn được thức uống vừa ý!"
 			message_send(recipient_id, response_sent_text)
 			response_sent_image = 'https://scontent.fsgn1-1.fna.fbcdn.net/v/t39.30808-6/418514395_122107255376177774_7917820904535141587_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeGXT2cWi6vGNGi7xMLuzaWMgS8vYg4irqmBLy9iDiKuqYgNUkdi72ZaGsaof3kiKBiSsmUey7KfjYafZJMT5UG4&_nc_ohc=QL8l34ozMv0AX8x-zC6&_nc_ht=scontent.fsgn1-1.fna&oh=00_AfDwwlyuQTjQyxl2-vWfPo7S3oZciBvKImxKsZK9X8GSsA&oe=65AD0DB6'
 			image_send(recipient_id, response_sent_image)
