@@ -8,7 +8,18 @@ app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 WIT_TOKEN = os.environ['WIT_TOKEN']
-MENU_CAFE167 = 'https://scontent.fsgn1-1.fna.fbcdn.net/v/t39.30808-6/418514395_122107255376177774_7917820904535141587_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeGXT2cWi6vGNGi7xMLuzaWMgS8vYg4irqmBLy9iDiKuqYgNUkdi72ZaGsaof3kiKBiSsmUey7KfjYafZJMT5UG4&_nc_ohc=QL8l34ozMv0AX8x-zC6&_nc_ht=scontent.fsgn1-1.fna&oh=00_AfDwwlyuQTjQyxl2-vWfPo7S3oZciBvKImxKsZK9X8GSsA&oe=65AD0DB6'
+MENU_CAFE167 = 'http://facebook.com/122107255382177774'
+MENU_ONLINE_LINK = [{
+					"title": "Menu Cafe167",
+				    "subtitle": "Hân hạnh được phục vụ quý khách",
+				    "image_url": MENU_CAFE167,
+				}, {
+				    "buttons": [{
+					    "type": "web_url",
+					    "url": "https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa",
+					    "title": "ShopeeFood"
+				    }],
+			    }]
 			
 bot = Bot(ACCESS_TOKEN)
 client = Wit(access_token=WIT_TOKEN)
@@ -73,10 +84,11 @@ def generate_message(text, recipient_id, user_first_name):
 		if intents == 'mo_dau':
 			response_sent_text = f"Xin chào {user_first_name} đã ghé thăm Fanpage Cafe167. Đây là menu của quán, chúc {user_first_name} chọn được thức uống vừa ý!"
 			message_send(recipient_id, response_sent_text)
-			elements = []
-			element = Element(title="Menu Cafe167", image_url=MENU_CAFE167, subtitle="ShopeeFood", item_url="https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa")
-			elements.append(element)
-			element_send(recipient_id, elements)
+			element_send(recipient_id, MENU_ONLINE_LINK)
+			# elements = []
+			# element = Element(title="Menu Cafe167", image_url=MENU_CAFE167, subtitle="ShopeeFood", item_url="https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa")
+			# elements.append(element)
+			# element_send(recipient_id, elements)
 			# response_sent_image = MENU_CAFE167
 			# image_send(recipient_id, response_sent_image)
 			# response_sent_text = "Đặt hàng online tại: https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa"
