@@ -14,6 +14,7 @@ MENU_ONLINE_LINK = [
 					"title": "Menu Cafe167",
 					"image_url": MENU_CAFE167,
 					"subtitle": "Hân hạnh được phục vụ quý khách",
+					"item_url": MENU_CAFE167,
 					"buttons": [
 					{
 						"type": "web_url",
