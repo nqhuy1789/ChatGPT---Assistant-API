@@ -8,12 +8,12 @@ app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 WIT_TOKEN = os.environ['WIT_TOKEN']
-MENU_CAFE167 = 'https://photos.app.goo.gl/aamf4RfbptRmCP1Z6'
+MENU_CAFE167 = 'https://lh4.googleusercontent.com/-dZ2LhrpNpxs/AAAAAAAAAAI/AAAAAAAA1os/qrf-VeTVJrg/s0-c-k-no-ns/photo.jpg'
 MENU_ONLINE_LINK = [
 				{
 					"title": "Menu Cafe167",
-					"subtitle": "Hân hạnh được phục vụ quý khách",
 					"image_url": MENU_CAFE167,
+					"subtitle": "Hân hạnh được phục vụ quý khách",
 					"buttons": [
 					{
 						"type": "web_url",
