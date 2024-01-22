@@ -8,7 +8,7 @@ app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 WIT_TOKEN = os.environ['WIT_TOKEN']
-MENU_CAFE167 = 'http://facebook.com/122107255382177774'
+MENU_CAFE167 = 'https://photos.app.goo.gl/aamf4RfbptRmCP1Z6'
 MENU_ONLINE_LINK = [
 				{
 					"title": "Menu Cafe167",
