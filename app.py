@@ -23,13 +23,13 @@ def webhook():
 				if message.get('message'):
 					recipient_id = message['sender']['id']
 					sendTypingOn(recipient_id)
+					text = message['message'].get('text')
 					if text: 
 						user_profile = bot.get_user_info(recipient_id)
 						if user_profile:
 							user_first_name = user_profile['first_name']
 						else:
 							user_first_name = 'bạn'
-						text = message['message'].get('text')
 						generate_message(text,recipient_id, user_first_name)
 					sendTypingOff(recipient_id)
 	return '200 OK HTTPS.'
