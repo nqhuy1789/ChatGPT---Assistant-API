@@ -1,4 +1,5 @@
 from flask import Flask, request
+from pymessenger import Element, Button
 from bot import Bot
 from wit import Wit
 import os
@@ -7,6 +8,8 @@ app = Flask(__name__)
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 WIT_TOKEN = os.environ['WIT_TOKEN']
+MENU_CAFE167 = 'https://scontent.fsgn1-1.fna.fbcdn.net/v/t39.30808-6/418514395_122107255376177774_7917820904535141587_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeGXT2cWi6vGNGi7xMLuzaWMgS8vYg4irqmBLy9iDiKuqYgNUkdi72ZaGsaof3kiKBiSsmUey7KfjYafZJMT5UG4&_nc_ohc=QL8l34ozMv0AX8x-zC6&_nc_ht=scontent.fsgn1-1.fna&oh=00_AfDwwlyuQTjQyxl2-vWfPo7S3oZciBvKImxKsZK9X8GSsA&oe=65AD0DB6'
+			
 bot = Bot(ACCESS_TOKEN)
 client = Wit(access_token=WIT_TOKEN)
 
@@ -47,6 +50,10 @@ def message_send(recipient_id, response):
 	bot.send_text_message(recipient_id, response)
 	return "success"
 
+def element_send(recipient_id, elements):
+	bot.send_generic_message(recipient_id, elements)
+	return "success"
+
 def sendTypingOn(recipient_id):
 	bot.send_action(recipient_id, action='typing_on')
 	return "success"
@@ -66,10 +73,14 @@ def generate_message(text, recipient_id, user_first_name):
 		if intents == 'mo_dau':
 			response_sent_text = f"Xin chào {user_first_name} đã ghé thăm Fanpage Cafe167. Đây là menu của quán, chúc {user_first_name} chọn được thức uống vừa ý!"
 			message_send(recipient_id, response_sent_text)
-			response_sent_image = 'https://scontent.fsgn1-1.fna.fbcdn.net/v/t39.30808-6/418514395_122107255376177774_7917820904535141587_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeGXT2cWi6vGNGi7xMLuzaWMgS8vYg4irqmBLy9iDiKuqYgNUkdi72ZaGsaof3kiKBiSsmUey7KfjYafZJMT5UG4&_nc_ohc=QL8l34ozMv0AX8x-zC6&_nc_ht=scontent.fsgn1-1.fna&oh=00_AfDwwlyuQTjQyxl2-vWfPo7S3oZciBvKImxKsZK9X8GSsA&oe=65AD0DB6'
-			image_send(recipient_id, response_sent_image)
-			response_sent_text = "Đặt hàng online tại: https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa"
-			message_send(recipient_id, response_sent_text)
+			elements = []
+			element = Element(title="Menu Cafe167", image_url=MENU_CAFE167, subtitle="ShopeeFood", item_url="https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa")
+			elements.append(element)
+			element_send(recipient_id, elements)
+			# response_sent_image = MENU_CAFE167
+			# image_send(recipient_id, response_sent_image)
+			# response_sent_text = "Đặt hàng online tại: https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa"
+			# message_send(recipient_id, response_sent_text)
 		elif intents == 'ket_thuc':
 			response_sent_text = "Xin cảm ơn quý khách đã ủng hộ Cafe167. Hẹn gặp lại quý khách."
 			message_send(recipient_id, response_sent_text)
@@ -199,6 +210,7 @@ def generate_message(text, recipient_id, user_first_name):
 	else:
 		response_sent_text = "Xin cảm ơn quý khách đã quan tâm đến Cafe167, chúc quý khách một ngày tốt lành."
 		message_send(recipient_id, response_sent_text)
+
 
 # if __name__ == '__main__':
 # 	app.run()
