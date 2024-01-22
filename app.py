@@ -1,5 +1,5 @@
 from flask import Flask, request
-from pymessenger.bot import Bot
+from bot import Bot
 from wit import Wit
 import os
 
@@ -9,8 +9,6 @@ VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 WIT_TOKEN = os.environ['WIT_TOKEN']
 bot = Bot(ACCESS_TOKEN)
 client = Wit(access_token=WIT_TOKEN)
-response_result = ""
-user_first_name = "bạn"
 
 @app.route('/', methods = ['GET', 'POST'])
 def webhook():
@@ -18,7 +16,6 @@ def webhook():
 		token = request.args.get("hub.verify_token")
 		return verify_token(token)
 	elif (request.method == 'POST'):
-		
 		output = request.get_json()
 		for event in output['entry']:
 			messaging = event['messaging']
@@ -26,10 +23,14 @@ def webhook():
 				if message.get('message'):
 					recipient_id = message['sender']['id']
 					sendTypingOn(recipient_id)
-					# user_profile = bot.get_user_info(recipient_id)
-					# if user_profile: user_first_name = user_profile['first_name']
-					text = message['message'].get('text')
-					if text: generate_message(text,recipient_id)
+					if text: 
+						user_profile = bot.get_user_info(recipient_id)
+						if user_profile:
+							user_first_name = user_profile['first_name']
+						else:
+							user_first_name = 'bạn'
+						text = message['message'].get('text')
+						generate_message(text,recipient_id, user_first_name)
 					sendTypingOff(recipient_id)
 	return '200 OK HTTPS.'
 
@@ -54,7 +55,7 @@ def sendTypingOff(recipient_id):
 	bot.send_action(recipient_id, action='typing_off')
 	return "success"
 
-def generate_message(text, recipient_id):
+def generate_message(text, recipient_id, user_first_name):
 	response_sent_text = ''
 	response_sent_image = ''
 	intents = ''
@@ -63,7 +64,7 @@ def generate_message(text, recipient_id):
 	if response['intents']:
 		intents = response['intents'][0]['name']
 		if intents == 'mo_dau':
-			response_sent_text = "Xin chào quý khách đã ghé thăm Fanpage Cafe167. Đây là menu của quán, chúc bạn chọn được thức uống vừa ý!"
+			response_sent_text = f"Xin chào {user_first_name} đã ghé thăm Fanpage Cafe167. Đây là menu của quán, chúc {user_first_name} chọn được thức uống vừa ý!"
 			message_send(recipient_id, response_sent_text)
 			response_sent_image = 'https://scontent.fsgn1-1.fna.fbcdn.net/v/t39.30808-6/418514395_122107255376177774_7917820904535141587_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeGXT2cWi6vGNGi7xMLuzaWMgS8vYg4irqmBLy9iDiKuqYgNUkdi72ZaGsaof3kiKBiSsmUey7KfjYafZJMT5UG4&_nc_ohc=QL8l34ozMv0AX8x-zC6&_nc_ht=scontent.fsgn1-1.fna&oh=00_AfDwwlyuQTjQyxl2-vWfPo7S3oZciBvKImxKsZK9X8GSsA&oe=65AD0DB6'
 			image_send(recipient_id, response_sent_image)
