@@ -9,17 +9,20 @@ ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 WIT_TOKEN = os.environ['WIT_TOKEN']
 MENU_CAFE167 = 'http://facebook.com/122107255382177774'
-MENU_ONLINE_LINK = [{
+MENU_ONLINE_LINK = [
+				{
 					"title": "Menu Cafe167",
-				    "subtitle": "Hân hạnh được phục vụ quý khách",
-				    "image_url": MENU_CAFE167,
-				}, {
-				    "buttons": [{
-					    "type": "web_url",
-					    "url": "https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa",
-					    "title": "ShopeeFood"
-				    }],
-			    }]
+					"subtitle": "Hân hạnh được phục vụ quý khách",
+					"image_url": MENU_CAFE167,
+					"buttons": [
+					{
+						"type": "web_url",
+						"url": "https://shopeefood.vn/ho-chi-minh/167-cafe-hoang-sa",
+						"title": "ShopeeFood"
+					}],
+				}]
+				
+			
 			
 bot = Bot(ACCESS_TOKEN)
 client = Wit(access_token=WIT_TOKEN)
